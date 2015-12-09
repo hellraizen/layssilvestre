@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import com.layssilvestre.clienteException.ClienteJaCadastradoException;
+
 import DAL.ConectaBd;
 
 public class RepositorioClienteJdbc implements IRepositorioCliente {
@@ -20,8 +22,9 @@ public class RepositorioClienteJdbc implements IRepositorioCliente {
 	}
 
 	@Override
-	public void cadastrar(Cliente cliente) throws SQLException {
+	public void cadastrar(Cliente cliente) throws SQLException, ClienteJaCadastradoException {
 		
+		if(existe(cliente.getCpf())) throw new ClienteJaCadastradoException();
 		// Criando a String SQL
 		String sql = "insert into cliente(nome,cpf,dataNascimento,sexo,email,telefone,peso,altura,status,rua,bairro,numero,cidade,cep,complemento)values ( ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -154,8 +157,15 @@ public class RepositorioClienteJdbc implements IRepositorioCliente {
 
 		preStatement.setString(1, cpf);
 		ResultSet resultSet = preStatement.executeQuery();
-		return true;
+		if(resultSet.equals(cpf)){
+			JOptionPane.showMessageDialog(null, "Funcionário Existe!");
+			return true;
+		}
+		
+		return false;
 	}
+		
+	
 
 	@Override
 	public ArrayList<Cliente> listar() throws SQLException {

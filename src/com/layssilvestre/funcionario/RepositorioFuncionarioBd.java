@@ -8,54 +8,39 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import com.autofood.endereco.Endereco;
-
 import DAL.ConectaBd;
 
 public class RepositorioFuncionarioBd implements IRepositorioFuncionario {
 
 	Connection conn;
 	
-	public RepositorioFuncionarioBd() throws ClassNotFoundException 
-	{
+	public RepositorioFuncionarioBd() throws ClassNotFoundException {
 		this.conn = ConectaBd.conectabd();
 	}
 	
 	@Override
-	public void cadastrar(Funcionario funcionario) throws SQLException 
-	{
+	public void cadastrar(Funcionario funcionario) throws SQLException {
 		// Criando a String SQL
-		String sql = "insert into funcionariotest (idFuncionario, nomeFuncionario, cpfFuncionario, enderecoFuncionario, dataNascimentoFuncionario, sexoFuncionario, telefoneFuncionario, emailFuncionario, tipoFuncionario, login, senha) values (?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into funcionario (nome, cpf,dataNascimento, sexo, telefone, email, cargo, login, senha) values (?,?,?,?,?,?,?,?,?)";
 		
 		// Criar o PreparedStatement, objeto para executar a query
 		PreparedStatement preStatement = conn.prepareStatement(sql);
 		
 		// Atualizando o primeiro parametro
-		preStatement.setLong(1, funcionario.getIdFuncionario());
-		preStatement.setString(2, funcionario.getNomeFuncionario());
-		preStatement.setString(3, funcionario.getCpfFuncionario());
-		preStatement.setObject(4, funcionario.getEnderecoFuncionario());
-		preStatement.setString(5, funcionario.getDataNascimentoFuncionario());
-		preStatement.setString(6, funcionario.getSexoFuncionario());
-		preStatement.setString(7, funcionario.getTelefoneFuncionario());
-		preStatement.setString(8, funcionario.getEmailFuncionario());
-		preStatement.setString(9, funcionario.getTipoFuncionario());
-		preStatement.setString(10, funcionario.getLogin());
-		preStatement.setString(11, funcionario.getSenha());
 		
-		//preStatement.execute();
+		preStatement.setString(1, funcionario.getNome());
+		preStatement.setString(2, funcionario.getCpf());
+		preStatement.setString(3, funcionario.getDataNascimento());
+		preStatement.setString(4, funcionario.getSexo());
+		preStatement.setString(5, funcionario.getTelefone());
+		preStatement.setString(6, funcionario.getEmail());
+		preStatement.setString(7, funcionario.getCargo());
+		preStatement.setString(8, funcionario.getLogin());
+		preStatement.setString(9, funcionario.getSenha());
 		
-		// Retorna um ResultSet com todas as chaves geradas
-		ResultSet resultSet = preStatement.getGeneratedKeys();
-		Integer idFunc = 0;
+		preStatement.execute();
 		
-		// Pegando o identificador gerado a partir do último insert
-		while (resultSet.next())
-		{
-			idFunc = resultSet.getInt(1);
-		}
-				
-		System.out.println("ID do Insert no Banco " + idFunc);
+	
 		JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
 		
 	}
@@ -63,27 +48,26 @@ public class RepositorioFuncionarioBd implements IRepositorioFuncionario {
 	
 	
 	@Override
-	public void atualizar(Funcionario funcionario) throws SQLException 
-	{
+	public void atualizar(Funcionario funcionario) throws SQLException {
 		// Criando a String SQL
-		String sql = "update funcionariotest set idFuncionario = ?, nomeFuncionario = ?, cpfFuncionario = ?, enderecoFuncionario = ?, dataNascimentoFuncionario = ?, sexoFuncionario = ?, telefoneFuncionario = ?, emailFuncionario = ?, tipoFuncionario = ?, login = ?, senha = ?";
+		String sql = "update funcionario set id = ?, nome = ?, cpf = ?, dataNascimento = ?, sexo = ?, telefone = ?, email = ?, cargo = ?, login = ?, senha = ? where cpf=?" ;
 		
 		// Criar o PreparedStatement, objeto para executar a query
 		PreparedStatement preStatement;
 		
 		preStatement = conn.prepareStatement(sql);
 		
-		preStatement.setLong(1, funcionario.getIdFuncionario());
-		preStatement.setString(2, funcionario.getNomeFuncionario());
-		preStatement.setString(3, funcionario.getCpfFuncionario());
-		preStatement.setObject(4, funcionario.getEnderecoFuncionario());
-		preStatement.setString(5, funcionario.getDataNascimentoFuncionario());
-		preStatement.setString(6, funcionario.getSexoFuncionario());
-		preStatement.setString(7, funcionario.getTelefoneFuncionario());
-		preStatement.setString(8, funcionario.getEmailFuncionario());
-		preStatement.setString(9, funcionario.getTipoFuncionario());
-		preStatement.setString(10, funcionario.getLogin());
-		preStatement.setString(11, funcionario.getSenha());
+		preStatement.setInt(1, funcionario.getId());
+		preStatement.setString(2, funcionario.getNome());
+		preStatement.setString(3, funcionario.getCpf());
+		preStatement.setString(4, funcionario.getDataNascimento());
+		preStatement.setString(5, funcionario.getSexo());
+		preStatement.setString(6, funcionario.getTelefone());
+		preStatement.setString(7, funcionario.getEmail());
+		preStatement.setString(8, funcionario.getCargo());
+		preStatement.setString(9, funcionario.getLogin());
+		preStatement.setString(10, funcionario.getSenha());
+		preStatement.setString(11, funcionario.getCpf());
 	
 		// Executando a atualização para os valores setados
 		preStatement.executeUpdate();
@@ -97,10 +81,9 @@ public class RepositorioFuncionarioBd implements IRepositorioFuncionario {
 	
 	
 	@Override
-	public void remover(String cpf) throws SQLException 
-	{
+	public void remover(String cpf) throws SQLException {
 		//Criando String SQL
-		String sql = "delete from funcionariotest where cpfFuncionario = ?";
+		String sql = "delete from funcionario where cpf = ?";
 		
 		//Criando PreparedStatement
 		PreparedStatement preStatement = conn.prepareStatement(sql);
@@ -118,9 +101,8 @@ public class RepositorioFuncionarioBd implements IRepositorioFuncionario {
 	
 	
 	@Override
-	public Funcionario procurar(String cpf) throws SQLException 
-	{
-		String sql = "select * from funcionariotest where cpf = ?";
+	public Funcionario procurar(String cpf) throws SQLException {
+		String sql = "select * from funcionario where cpf = ?";
 		
 		PreparedStatement preStatement = conn.prepareStatement(sql);
 		
@@ -128,21 +110,19 @@ public class RepositorioFuncionarioBd implements IRepositorioFuncionario {
 		
 		ResultSet resultSet = preStatement.executeQuery();
 		
-		while(resultSet.next())
-		{
+		while(resultSet.next()){
 			Integer idFuncionario = resultSet.getInt(1);
 			String nomeFuncionario = resultSet.getString(2);
 			String cpfFuncionario = resultSet.getString(3);
-			Endereco enderecoFuncionario = (Endereco) resultSet.getObject(4);
-			String dataNascimentoFuncionario = resultSet.getString(5);
-			String sexoFuncionario = resultSet.getString(6);
-			String telefoneFuncionario = resultSet.getString(7);
-			String emailFuncionario = resultSet.getString(8);
-			String tipoFuncionario = resultSet.getString(9);
-			String login = resultSet.getString(10);
-			String senha = resultSet.getString(11);
+			String dataNascimentoFuncionario = resultSet.getString(4);
+			String sexoFuncionario = resultSet.getString(5);
+			String telefoneFuncionario = resultSet.getString(6);
+			String emailFuncionario = resultSet.getString(7);
+			String tipoFuncionario = resultSet.getString(8);
+			String login = resultSet.getString(9);
+			String senha = resultSet.getString(10);
 			
-			Funcionario funcionario = new Funcionario(idFuncionario, nomeFuncionario, cpfFuncionario, enderecoFuncionario, dataNascimentoFuncionario, sexoFuncionario, telefoneFuncionario, emailFuncionario, tipoFuncionario, login, senha);
+			Funcionario funcionario = new Funcionario(idFuncionario, nomeFuncionario, cpfFuncionario, dataNascimentoFuncionario, sexoFuncionario, telefoneFuncionario, emailFuncionario, tipoFuncionario, login, senha);
 			return funcionario;
 		}	
 		
@@ -153,21 +133,21 @@ public class RepositorioFuncionarioBd implements IRepositorioFuncionario {
 	
 	
 	@Override
-	public boolean existir(String cpf) throws SQLException 
-	{
-		String sql = "select * from funcionariotest where cpf = ?";
+	public boolean existir(String cpf) throws SQLException {
+		
+		String sql = "select * from funcionario where cpf = ?";
+		
 		PreparedStatement preStatement = conn.prepareStatement(sql);
 		
 		preStatement.setString(1,cpf);
 		
 		ResultSet resultSet = preStatement.executeQuery();
 		
-		if(resultSet.equals(cpf))
-		{
+		if(resultSet.equals(cpf)){
 			JOptionPane.showMessageDialog(null, "Funcionário Existe!");
 			return true;
 		}
-		JOptionPane.showMessageDialog(null, "Funcionário Não Existe!");
+		
 		return false;
 	}
 
@@ -175,11 +155,10 @@ public class RepositorioFuncionarioBd implements IRepositorioFuncionario {
 	
 	
 	@Override
-	public ArrayList<Funcionario> listar() throws SQLException 
-	{
+	public ArrayList<Funcionario> listar() throws SQLException {
 		ArrayList<Funcionario> arrayFuncionario = new ArrayList<Funcionario>();
 		
-		String sql = "select * from funcionariotest";
+		String sql = "select * from funcionario";
 		PreparedStatement preStatement = conn.prepareStatement(sql);
 		
 		ResultSet resultSet = preStatement.executeQuery();
@@ -189,16 +168,15 @@ public class RepositorioFuncionarioBd implements IRepositorioFuncionario {
 			Integer idFuncionario = resultSet.getInt(1);
 			String nomeFuncionario = resultSet.getString(2);
 			String cpfFuncionario = resultSet.getString(3);
-			Endereco enderecoFuncionario = (Endereco) resultSet.getObject(4);
-			String dataNascimentoFuncionario = resultSet.getString(5);
-			String sexoFuncionario = resultSet.getString(6);
-			String telefoneFuncionario = resultSet.getString(7);
-			String emailFuncionario = resultSet.getString(8);
-			String tipoFuncionario = resultSet.getString(9);
-			String login = resultSet.getString(10);
-			String senha = resultSet.getString(11);
+			String dataNascimentoFuncionario = resultSet.getString(4);
+			String sexoFuncionario = resultSet.getString(5);
+			String telefoneFuncionario = resultSet.getString(6);
+			String emailFuncionario = resultSet.getString(7);
+			String tipoFuncionario = resultSet.getString(8);
+			String login = resultSet.getString(9);
+			String senha = resultSet.getString(10);
 			
-			Funcionario funcionario = new Funcionario(idFuncionario, nomeFuncionario, cpfFuncionario, enderecoFuncionario, dataNascimentoFuncionario, sexoFuncionario, telefoneFuncionario, emailFuncionario, tipoFuncionario, login, senha);
+			Funcionario funcionario = new Funcionario(idFuncionario, nomeFuncionario, cpfFuncionario, dataNascimentoFuncionario, sexoFuncionario, telefoneFuncionario, emailFuncionario, tipoFuncionario, login, senha);
 			arrayFuncionario.add(funcionario);
 		}
 		

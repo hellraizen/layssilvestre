@@ -16,6 +16,8 @@ import com.layssilvestre.clientes.Cliente;
 import com.layssilvestre.clientes.ControladorCliente;
 import com.layssilvestre.funcionario.ControladorFuncionario;
 import com.layssilvestre.funcionario.Funcionario;
+import com.layssilvestre.mensalidade.ControleMensalidade;
+import com.layssilvestre.mensalidade.Mensalidade;
 
 
 
@@ -25,11 +27,13 @@ public class Fachada {
 	private ControladorFuncionario controladorFuncionario;
 	private ControladorCaixa controladorCaixa;
 	private ControleAtendimento controladorAtendimento;
+	private ControleMensalidade controladorMensalidade;
 
 	private Fachada() throws ClassNotFoundException, IOException {
 		this.controladorCliente = new ControladorCliente();
 		this.controladorAtendimento = new ControleAtendimento();
-		//this.controladorFuncionario = new ControladorFuncionario();
+		this.controladorFuncionario = new ControladorFuncionario();
+		this.controladorMensalidade = new ControleMensalidade();
 		//this.controladorCaixa = new ControladorCaixa();
 	}
 
@@ -78,7 +82,7 @@ public class Fachada {
 //------------------------------------------FUNCIONARIO-------------------------------------------------------------------------
 
 
-	public void cadastrarFuncionario(Funcionario funcionario) throws SQLException, IOException
+	public void cadastrarFuncionario(Funcionario funcionario) throws SQLException, IOException, ClienteCpfInvalidoException
 	{
 		controladorFuncionario.cadastrar(funcionario);
 	} 
@@ -160,6 +164,15 @@ public class Fachada {
 	public ArrayList<Atendimento> listarAtendimento() throws SQLException{
 		
 		return controladorAtendimento.listar();
+	}
+	
+	//----------------------------------------------------------------Mensalidade--------------------------------------
+	
+	public void gerarMensalide (Mensalidade mensalidade){
+		controladorMensalidade.gerarMensalide(mensalidade);
+	}
+	public ArrayList<Mensalidade> listarMensalidade(){
+		return controladorMensalidade.listarMensalidade();
 	}
 	
 	

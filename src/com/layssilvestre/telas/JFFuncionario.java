@@ -6,17 +6,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.autofood.clientes.Cliente;
-import com.autofood.endereco.Endereco;
+import com.layssilvestre.clienteException.ClienteCpfInvalidoException;
 import com.layssilvestre.fachada.Fachada;
 import com.layssilvestre.funcionario.Funcionario;
-
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
@@ -25,7 +23,6 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -72,6 +69,7 @@ public class JFFuncionario extends JFrame {
 	 * Create the frame.
 	 */
 	public JFFuncionario() {
+		setTitle("Cadastro Funcionario\r\n");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 769, 519);
 		contentPane = new JPanel();
@@ -89,21 +87,15 @@ public class JFFuncionario extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				cadastrar();
 				limparTabela();
+				try {
+					listar();
+				} catch (ClassNotFoundException | SQLException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
-			public void limparTabela() 
-			{
-				txtId.setText(" ");
-				txtNome.setText(" ");
-				txtCpf.setText(" ");
-				txtData.setText(" ");
-				txtTelefone.setText(" ");
-				txtEmail.setText(" ");
-				txtLogin.setText(" ");
-				txtSenha.setText(" ");
-				txtCargo.setText(" ");
-				
-			}
+		
 		});
 		btnCadastrar.setBounds(10, 23, 105, 23);
 		panel.add(btnCadastrar);
@@ -112,6 +104,12 @@ public class JFFuncionario extends JFrame {
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				atualizar();
+				try {
+					listar();
+				} catch (ClassNotFoundException | SQLException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		btnAtualizar.setBounds(125, 23, 105, 23);
@@ -143,6 +141,7 @@ public class JFFuncionario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Fachada.getInstance().removerFuncionario(cpfControle);
+					listar();
 				} catch (ClassNotFoundException | SQLException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -253,6 +252,7 @@ public class JFFuncionario extends JFrame {
 		contentPane.add(label);
 		
 		 rBMasc = new JRadioButton("Masculino");
+		 rBMasc.setSelected(true);
 		 groupSexo.add(rBMasc);
 		 
 		rBMasc.setBounds(533, 118, 83, 23);
@@ -345,8 +345,8 @@ public class JFFuncionario extends JFrame {
 		try {
 			Fachada.getInstance().cadastrarFuncionario(funcionario);
 			
-		} catch (ClassNotFoundException | SQLException | IOException e) {
-			// TODO Auto-generated catch block
+		} catch (ClassNotFoundException | SQLException | IOException | ClienteCpfInvalidoException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 		
@@ -368,14 +368,14 @@ public class JFFuncionario extends JFrame {
 		ArrayList<Funcionario> funcionarios = Fachada.getInstance().listarFuncionario();
 		for (Funcionario funcionario : funcionarios) {
 			Vector vector = new Vector();
-			vector.add(funcionario.getIdFuncionario());
-			vector.add(funcionario.getNomeFuncionario());
-			vector.add(funcionario.getCpfFuncionario());
-			vector.add(funcionario.getDataNascimentoFuncionario());
-			vector.add(funcionario.getTelefoneFuncionario());
-			vector.add(funcionario.getSexoFuncionario());
-			vector.add(funcionario.getEmailFuncionario());
-			vector.add(funcionario.getTipoFuncionario());
+			vector.add(funcionario.getId());
+			vector.add(funcionario.getNome());
+			vector.add(funcionario.getCpf());
+			vector.add(funcionario.getDataNascimento());
+			vector.add(funcionario.getTelefone());
+			vector.add(funcionario.getSexo());
+			vector.add(funcionario.getEmail());
+			vector.add(funcionario.getCargo());
 			vector.add(funcionario.getLogin());
 			vector.add(funcionario.getSenha());
 		
@@ -395,12 +395,13 @@ public class JFFuncionario extends JFrame {
 		try {
 			Funcionario funcionario = Fachada.getInstance().procurarFuncionario(cpfControle);
 		
-			Integer idFuncionario = funcionario.getIdFuncionario();
-			String nomeFuncionario = funcionario.getNomeFuncionario();
-			String cpfFuncionario = funcionario.getCpfFuncionario();
-			String dataNascimentoFuncionario = funcionario.getDataNascimentoFuncionario();
-			String telefoneFuncionario = funcionario.getTelefoneFuncionario();
-			String emailFuncionario = funcionario.getEmailFuncionario();
+			Integer idFuncionario = funcionario.getId();
+			String nomeFuncionario = funcionario.getNome();
+			String cpfFuncionario = funcionario.getCpf();
+			String dataNascimentoFuncionario = funcionario.getDataNascimento();
+			String telefoneFuncionario = funcionario.getTelefone();
+			String cargo = funcionario.getCargo();
+			String emailFuncionario = funcionario.getEmail();
 			String login = funcionario.getLogin();
 			String senha = funcionario.getSenha();
 			
@@ -410,6 +411,7 @@ public class JFFuncionario extends JFrame {
 			txtCpf.setText(cpfFuncionario);
 			txtData.setText(dataNascimentoFuncionario);
 			txtTelefone.setText(telefoneFuncionario);
+			txtCargo.setText(cargo);
 			txtEmail.setText(emailFuncionario);
 			txtLogin.setText(login);
 			txtSenha.setText(senha);
@@ -425,16 +427,18 @@ public class JFFuncionario extends JFrame {
 	public void atualizar()
 	{
 		 
-		Integer idFuncionario = Integer.parseInt(txtId.getText());
-		String nomeFuncionario = txtNome.getText();
-		String cpfFuncionario = txtCpf.getText();
-		String dataNascimentoFuncionario = txtData.getText();
-		String telefoneFuncionario = txtTelefone.getText();
-		String emailFuncionario = txtEmail.getText();
+		Integer id = Integer.parseInt(txtId.getText());
+		String nome = txtNome.getText();
+		String cpf = txtCpf.getText();
+		String dataNascimento = txtData.getText();
+		String sexo = selecaoSexo();
+		String telefone = txtTelefone.getText();
+		String email = txtEmail.getText();
+		String cargo = txtCargo.getText();
 		String login = txtLogin.getText();
 		String senha = txtSenha.getText();
 		
-		Funcionario funcionario = new Funcionario(idFuncionario, nomeFuncionario, cpfFuncionario, dataNascimentoFuncionario, telefoneFuncionario, emailFuncionario, login, senha);
+		Funcionario funcionario = new Funcionario(id, nome, cpf, dataNascimento, sexo, telefone, email, cargo, login, senha);
 		
 		try {
 			Fachada.getInstance().atualizarFuncionario(funcionario);
@@ -444,24 +448,17 @@ public class JFFuncionario extends JFrame {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public void limparTabela() {
+		txtId.setText(" ");
+		txtNome.setText(" ");
+		txtCpf.setText(" ");
+		txtData.setText(" ");
+		txtTelefone.setText(" ");
+		txtEmail.setText(" ");
+		txtLogin.setText(" ");
+		txtSenha.setText(" ");
+		txtCargo.setText(" ");
+		
+	}
 	
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import com.layssilvestre.util.TrataDataBr;;
 
-public class RepositorioMensalidade {
+public class RepositorioMensalidade implements IRepositorioMensalidade{
 
 	private ArrayList<Mensalidade> arrayMensalidade;
 	private int index;

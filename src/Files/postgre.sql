@@ -35,19 +35,18 @@ idfuncionario int,
 primary key (cod)
 );
 
-create table funcionariotest(
-idFuncionario serial,
-nomeFuncionario varchar(50),
-cpfFuncionario varchar(14),
-enderecoFuncionario varchar(50),
-dataNascimentoFuncionario varchar(11),
-sexoFuncionario varchar(10),
-telefoneFuncionario varchar(15),
-emailFuncionario varchar(50),
-tipoFuncionario varchar(20),
-login varchar(10),
-senha varchar(10),
-primary key(idFuncionario)
+create table funcionario(
+id serial,
+nome varchar(80) not null,
+cpf varchar(14),
+dataNascimento varchar(10), 
+sexo varchar(15),
+telefone varchar(12),
+email varchar(70),
+cargo varchar(50),
+login varchar(30),
+senha varchar(12),
+primary key (cpf)
 );
 
 create table log(

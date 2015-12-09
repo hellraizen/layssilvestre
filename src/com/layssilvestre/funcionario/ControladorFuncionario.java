@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.layssilvestre.clienteException.ClienteCpfInvalidoException;
+import com.layssilvestre.util.ValidarCPF;
+
 public class ControladorFuncionario {
 
 	private IRepositorioFuncionario repositorioFuncionario;
@@ -15,9 +18,12 @@ public class ControladorFuncionario {
 		
 	}
 
-	public void cadastrar(Funcionario funcionario) throws SQLException, IOException 
-	{
+	public void cadastrar(Funcionario funcionario) throws SQLException, IOException, ClienteCpfInvalidoException {
+		if (!ValidarCPF.validaCPF(funcionario.getCpf())) {
+			throw new ClienteCpfInvalidoException();
+		} else {
 		repositorioFuncionario.cadastrar(funcionario);
+		}
 	}
 
 	
