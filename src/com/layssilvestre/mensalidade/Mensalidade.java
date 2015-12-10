@@ -5,17 +5,15 @@ public class Mensalidade {
 	private int codigo;
 	private String nomeAluno;
 	private String tipo;
-	private int quantidade;
 	private int parcela;
 	private double valor;
 	private String status;
 	private String data;
 
-	public Mensalidade(String tipo, int quantidade, int parcela, String status, String nomeAluno,double valor) {
+	public Mensalidade(String tipo, int parcela, String status, String nomeAluno,double valor) {
 		this.valor=valor;
 		this.nomeAluno = nomeAluno;
 		this.tipo = tipo;
-		this.quantidade = quantidade;
 		this.parcela = parcela;
 		this.status = status;
 	}
@@ -23,7 +21,7 @@ public class Mensalidade {
 	@Override
 	public String toString() {
 		return "Mensalidade [codigo=" + codigo + ", nomeAluno=" + nomeAluno + ", tipo=" + tipo + ", quantidade="
-				+ quantidade + ", parcela=" + parcela + ", valor=" + valor + ", status=" + status + ", data=" + data
+			 + ", parcela=" + parcela + ", valor=" + valor + ", status=" + status + ", data=" + data
 				+ "]\n";
 	}
 
@@ -67,13 +65,6 @@ public class Mensalidade {
 		this.tipo = tipo;
 	}
 
-	public int getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
-	}
 
 	public int getParcela() {
 		return parcela;

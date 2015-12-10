@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -32,6 +33,8 @@ import com.layssilvestre.atendimento.Atendimento;
 import com.layssilvestre.clientes.Cliente;
 import com.layssilvestre.fachada.Fachada;
 import com.layssilvestre.mensalidade.Mensalidade;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class JFAtendimentoCliente extends JFrame {
 
@@ -124,6 +127,22 @@ public class JFAtendimentoCliente extends JFrame {
 		cBClienteList = new JComboBox();
 		
 		cBatividadeList = new JComboBox();
+		cBatividadeList.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				String atividade = cBatividadeList.getSelectedItem().toString();
+				try {
+					String valor = Fachada.getInstance().pesquisarAtividade(atividade);
+					if(valor.equals("")){
+						txtValor.setText("0.00");
+					}else txtValor.setText(valor);
+					
+				} catch (ClassNotFoundException | SQLException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
 		
 		JLabel lblAtividade = new JLabel("Atividade");
 		
@@ -205,6 +224,7 @@ public class JFAtendimentoCliente extends JFrame {
 				try {
 					cadastrar();
 					listar();
+					Fachada.getInstance().limpararray();
 				} catch (ClassNotFoundException | IOException | SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -212,14 +232,16 @@ public class JFAtendimentoCliente extends JFrame {
 			}
 		});
 		
-		JButton btnPagar = new JButton("Pagar");
-		
-		JButton btnExcluir = new JButton("");
-		btnExcluir.setIcon(new ImageIcon(JFAtendimentoCliente.class.getResource("/com/layssilvestre/imagens/image004.gif")));
-		
 		JButton btnSalvar = new JButton("");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					salvar();
+				} catch (ClassNotFoundException | IOException | SQLException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				}
+				
 			
 			}
 		});
@@ -236,35 +258,24 @@ public class JFAtendimentoCliente extends JFrame {
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnGerar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
 						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(btnExcluir)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnGerar, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
-						.addComponent(btnPagar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+							.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(32, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addGap(20)
-					.addComponent(btnGerar, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnPagar, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-							.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(btnSalvar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnExcluir, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addContainerGap())
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addGap(18)
-							.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())))
+					.addComponent(btnGerar, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+					.addGap(30)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnSalvar))
+					.addContainerGap())
 		);
 		panel_2.setLayout(gl_panel_2);
 		panel.setLayout(gl_panel);
@@ -305,7 +316,8 @@ public class JFAtendimentoCliente extends JFrame {
 			Iterator<Atendimento> it = listaCliente.iterator();  
 		    while(it.hasNext()){  
 		  
-		        Atendimento e = it.next();  
+		        Atendimento e = it.next();
+		        
 		        String atendimento = e.getTipo();  
 		  
 		        cBatividadeList.addItem(atendimento); 
@@ -321,18 +333,19 @@ public class JFAtendimentoCliente extends JFrame {
 	}
 	private void cadastrar() throws ClassNotFoundException, IOException{
 		String tipo = cBatividadeList.getSelectedItem().toString();
-		int quantidade = 0;
 		int parcela = Integer.parseInt(cBparcela.getSelectedItem().toString());
 		String nomeAluno = cBClienteList.getSelectedItem().toString();
 		double valor = Double.parseDouble(txtValor.getText());
 		String status= "aberto";
 		
-		Mensalidade mensalidade = new Mensalidade(tipo, quantidade, parcela, status, nomeAluno, valor);
+		Mensalidade mensalidade = new Mensalidade(tipo, parcela, status, nomeAluno, valor);
 		Fachada.getInstance().gerarMensalide(mensalidade);
 		
 	}
 	private void listar() throws ClassNotFoundException, SQLException, IOException {
+	
 		this.limparTabelaProduto();
+		limparTabelaProduto();
 		ArrayList<Mensalidade> mensalidade = Fachada.getInstance().listarMensalidade();
 		for (Mensalidade mensalidades : mensalidade) {
 			Vector vector = new Vector();
@@ -350,4 +363,11 @@ public class JFAtendimentoCliente extends JFrame {
 	private void limparTabelaProduto() {
 		defaultTable.setNumRows(0);
 	}
+	private void salvar() throws ClassNotFoundException, IOException, SQLException{
+		ArrayList<Mensalidade> mensalidade = Fachada.getInstance().listarMensalidade();
+		
+		Fachada.getInstance().salvarMensalidade(mensalidade);
+	
+	}
+	
 }

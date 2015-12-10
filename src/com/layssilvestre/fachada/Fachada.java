@@ -3,6 +3,7 @@ package com.layssilvestre.fachada;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import com.layssilvestre.atendimento.Atendimento;
@@ -34,7 +35,7 @@ public class Fachada {
 		this.controladorAtendimento = new ControleAtendimento();
 		this.controladorFuncionario = new ControladorFuncionario();
 		this.controladorMensalidade = new ControleMensalidade();
-		//this.controladorCaixa = new ControladorCaixa();
+		this.controladorCaixa = new ControladorCaixa();
 	}
 
 	public static Fachada getInstance() throws ClassNotFoundException, IOException {
@@ -126,19 +127,16 @@ public class Fachada {
 	
 
 	//------------------------------------------Caixa-------------------------------------------------------------------------
-	public boolean abrirCaixa() {
-		return controladorCaixa.abrirCaixa();
-	}
 
-	public boolean fecharCaixa() {
-		return controladorCaixa.fecharCaixa();
+	public ArrayList<Caixa> pesquisaBet (String inicio) throws SQLException{
+		return controladorCaixa.pesquisaBet(inicio);
 	}
-
-	public void entradaCaixa(Caixa entradaCaixa) throws SQLException, IOException {
+	
+	public void entradaCaixa(Caixa entradaCaixa) throws SQLException, IOException , ParseException {
 		controladorCaixa.entradaCaixa(entradaCaixa);
 	}
 
-	public void saidaCaixa(Caixa saidaCaixa) throws SQLException, IOException {
+	public void saidaCaixa(Caixa saidaCaixa) throws SQLException, IOException, ParseException  {
 		controladorCaixa.saidaCaixa(saidaCaixa);
 	}
 
@@ -168,11 +166,21 @@ public class Fachada {
 	
 	//----------------------------------------------------------------Mensalidade--------------------------------------
 	
+	public String pesquisarAtividade(String atividade) throws SQLException{
+		return controladorMensalidade.pesquisarAtividade(atividade);
+	}
+	
 	public void gerarMensalide (Mensalidade mensalidade){
 		controladorMensalidade.gerarMensalide(mensalidade);
 	}
 	public ArrayList<Mensalidade> listarMensalidade(){
 		return controladorMensalidade.listarMensalidade();
+	}
+	public void salvarMensalidade(ArrayList<Mensalidade> array) throws SQLException{
+		controladorMensalidade.salvarMensalidade(array);
+	}
+	public void limpararray(){
+		controladorMensalidade.limpararray();
 	}
 	
 	

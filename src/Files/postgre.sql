@@ -25,14 +25,14 @@ valor numeric(8,2),
 primary key (codigo)
 );
 
-create table caixateste(
-cod serial,
+create table caixa(
+id serial, 
 entrada numeric(8,2),
-saida   numeric(8,2),
-Idcomanda int,
-idfuncionario int,
+saida numeric(8,2),
+idFuncionario int,
+data date,
 
-primary key (cod)
+primary key (id)
 );
 
 create table funcionario(
@@ -48,6 +48,19 @@ login varchar(30),
 senha varchar(12),
 primary key (cpf)
 );
+
+create table Mensalidade(
+id serial,
+nomeAluno varchar(80),
+tipo varchar(60), 
+parcela int,
+valor numeric(8,2),
+status varchar(50),
+data varchar(20),
+primary key (id)
+);
+
+
 
 create table log(
 cod serial,

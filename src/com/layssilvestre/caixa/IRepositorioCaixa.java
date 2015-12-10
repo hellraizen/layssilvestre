@@ -2,14 +2,12 @@ package com.layssilvestre.caixa;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public interface IRepositorioCaixa {
 	
-
-	public boolean abrirCaixa();
-
-	public boolean fecharCaixa();
+	public ArrayList<Caixa> pesquisaBet (String inicio) throws SQLException;
 
 	public void entradaCaixa(Caixa entradaCaixa) throws SQLException, IOException;
 

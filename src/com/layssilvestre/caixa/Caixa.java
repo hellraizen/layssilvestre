@@ -1,42 +1,42 @@
 package com.layssilvestre.caixa;
 
-import java.util.Date;
+
 
 public class Caixa {
 	private Double entrada;
 	private Double saida;
 	private Integer id;
-	private Double totalCaixa;
 	private Integer idFuncionario;
-	private Date data;
+	private String mes;
+	private String data;
+	private String descricao;
 
-	public Caixa(Double entrada, Integer id, Integer idFuncionario) {
-		setEntrada(entrada);
-		setIdComanda(id);
-		setIdFuncionario(idFuncionario);
+	public Caixa(Double entrada, Double saida, Integer id, Integer idFuncionario,String mes, String data,String descricao) {
 
+		this.entrada = entrada;
+		this.saida = saida;
+		this.id = id;
+		this.idFuncionario = idFuncionario;
+		this.mes=mes;
+		this.data = data;
+		this.descricao= descricao;
 	}
 
-	public Caixa(Double entrada, Integer id, Integer idFuncionario, Date data) {
-		setEntrada(entrada);
-		setIdComanda(id);
-		setIdFuncionario(idFuncionario);
-		setData(data);
+	public Caixa(Double entrada, Double saida, Integer idFuncionario,String mes, String data,String descricao) {
 
-	}
-
-	public Caixa(Double entrada, Integer idFuncionario, Date data) {
-		setEntrada(entrada);
-		setIdFuncionario(idFuncionario);
-		setData(data);
-
+		this.entrada = entrada;
+		this.saida = saida;
+		this.idFuncionario = idFuncionario;
+		this.mes=mes;
+		this.data = data;
+		this.descricao=descricao;
 	}
 
 	public Double getEntrada() {
 		return entrada;
 	}
 
-	public void setEntrada(double entrada) {
+	public void setEntrada(Double entrada) {
 		this.entrada = entrada;
 	}
 
@@ -48,12 +48,12 @@ public class Caixa {
 		this.saida = saida;
 	}
 
-	public Integer getIdComanda() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setIdComanda(Integer idComanda) {
-		this.id = idComanda;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Integer getIdFuncionario() {
@@ -64,26 +64,29 @@ public class Caixa {
 		this.idFuncionario = idFuncionario;
 	}
 
-	public Double getTotalCaixa() {
-		return totalCaixa;
-	}
-
-	public void setTotalCaixa(Double totalPago) {
-		this.totalCaixa = totalPago;
-	}
-
-	public Date getData() {
+	public String getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 
-	@Override
-	public String toString() {
-		return "Caixa [entrada=" + entrada + ", saida=" + saida + ", id=" + id + ", totalCaixa=" + totalCaixa
-				+ ", idFuncionario=" + idFuncionario + ", data=" + data + "]";
+	public String getMes() {
+		return mes;
 	}
+
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
 
 }
