@@ -224,7 +224,7 @@ public class JFAtendimentoCliente extends JFrame {
 				try {
 					cadastrar();
 					listar();
-					Fachada.getInstance().limpararray();
+					
 				} catch (ClassNotFoundException | IOException | SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -237,6 +237,7 @@ public class JFAtendimentoCliente extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					salvar();
+					Fachada.getInstance().limpararray();
 				} catch (ClassNotFoundException | IOException | SQLException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();

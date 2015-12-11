@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
@@ -55,58 +56,81 @@ public class JFMenuInicial extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		JMenu mnArquivo = new JMenu("Op\u00E7\u00F5es");
+		JMenu mnArquivo = new JMenu("Cadastro");
 		menuBar.add(mnArquivo);
 
-		JMenuItem mntmCliente = new JMenuItem("Cliente\r\n");
-		mntmCliente.addActionListener(new ActionListener() {
+		JMenuItem nenuCliente = new JMenuItem("Cliente\r\n");
+		nenuCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFClienteListar clienteLista = new JFClienteListar();
 				clienteLista.setVisible(true);
 			}
 		});
-		mnArquivo.add(mntmCliente);
-		
-		JMenuItem mntmEndereco = new JMenuItem("Endere\u00E7o");
-		mnArquivo.add(mntmEndereco);
+		mnArquivo.add(nenuCliente);
 
-		JMenuItem mntmFuncionrio = new JMenuItem("Funcion\u00E1rio");
-		mntmFuncionrio.addActionListener(new ActionListener() {
+		JMenuItem menuFuncionrio = new JMenuItem("Funcion\u00E1rio");
+		menuFuncionrio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFFuncionario teleFuncionario = new JFFuncionario();
 				teleFuncionario.setVisible(true);
 			}
 		});
-		mnArquivo.add(mntmFuncionrio);
+		mnArquivo.add(menuFuncionrio);
 
-		JMenuItem mntmSair = new JMenuItem("Sair");
-		mntmSair.addActionListener(new ActionListener() {
+		JMenuItem menuSair = new JMenuItem("Sair");
+		menuSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 
 			}
 		});
-		mnArquivo.add(mntmSair);
+		
+		JMenuItem menuAtendimento = new JMenuItem("Atendimento");
+		menuAtendimento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFAtendimento atendimentoTela = new JFAtendimento();
+				atendimentoTela.setVisible(true);
+			}
+		});
+		mnArquivo.add(menuAtendimento);
+		mnArquivo.add(menuSair);
 
-		JMenu mnHelp = new JMenu("Atendimento");
+		JMenu mnHelp = new JMenu("Caixa");
 		menuBar.add(mnHelp);
 
-		JMenuItem mntmCaixa = new JMenuItem("Caixa");
-		mntmCaixa.addActionListener(new ActionListener() {
+		JMenuItem menuCaixa = new JMenuItem("Caixa");
+		menuCaixa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFCaixa telaCaixa = new JFCaixa();
 				telaCaixa.setVisible(true);
 			}
 		});
-		mnHelp.add(mntmCaixa);
+		mnHelp.add(menuCaixa);
 
-		JMenuItem menuItem_1 = new JMenuItem("Vers\u00E3o");
-		mnHelp.add(menuItem_1);
+		JMenuItem menuPagamento = new JMenuItem("Pagamento");
+		mnHelp.add(menuPagamento);
+		
+		JMenu menu_1 = new JMenu("Atendimento");
+		menuBar.add(menu_1);
+		
+		JMenuItem mntmGerarFicha = new JMenuItem("Gerar Ficha");
+		mntmGerarFicha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFAtendimentoCliente atendimentoCliente= new JFAtendimentoCliente();
+				atendimentoCliente.setVisible(true);
+			}
+		});
+		menu_1.add(mntmGerarFicha);
 
 		JMenu menu = new JMenu("Help");
 		menuBar.add(menu);
 
 		JMenuItem menuItem = new JMenuItem("Vers\u00E3o");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Entre em Contado com \n ADMINISTRADOR \n 081 98863 0020 \n Te amo Moreca =***");
+			}
+		});
 		menu.add(menuItem);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

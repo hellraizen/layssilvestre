@@ -98,7 +98,7 @@ public class JFAtendimento extends JFrame {
 			}
 		});
 		btnEditar.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnEditar.setToolTipText("Excluir");
+		btnEditar.setToolTipText("Editar");
 		
 		JButton btnExcluir = new JButton("");
 		btnExcluir.addActionListener(new ActionListener() {
@@ -145,7 +145,7 @@ public class JFAtendimento extends JFrame {
 				}
 			}
 		});
-		btnListar.setToolTipText("Adicionar");
+		btnListar.setToolTipText("Listar");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

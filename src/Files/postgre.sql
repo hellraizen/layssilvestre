@@ -30,10 +30,12 @@ id serial,
 entrada numeric(8,2),
 saida numeric(8,2),
 idFuncionario int,
-data date,
-
+mes varchar(30),
+data varchar(40),
+descricao varchar(100),
 primary key (id)
-);
+ );
+
 
 create table funcionario(
 id serial,
@@ -56,7 +58,7 @@ tipo varchar(60),
 parcela int,
 valor numeric(8,2),
 status varchar(50),
-data varchar(20),
+data varchar(40),
 primary key (id)
 );
 

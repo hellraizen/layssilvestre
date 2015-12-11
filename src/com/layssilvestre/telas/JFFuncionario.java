@@ -86,7 +86,7 @@ public class JFFuncionario extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cadastrar();
-				limparTabela();
+				limparCampos();
 				try {
 					listar();
 				} catch (ClassNotFoundException | SQLException | IOException e) {
@@ -104,6 +104,7 @@ public class JFFuncionario extends JFrame {
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				atualizar();
+				limparCampos();
 				try {
 					listar();
 				} catch (ClassNotFoundException | SQLException | IOException e) {
@@ -203,7 +204,7 @@ public class JFFuncionario extends JFrame {
 		contentPane.add(txtEmail);
 		
 		JLabel lblTelefone = new JLabel("Telefone");
-		lblTelefone.setBounds(505, 11, 46, 14);
+		lblTelefone.setBounds(505, 11, 74, 14);
 		contentPane.add(lblTelefone);
 		
 		txtTelefone = new JTextField();
@@ -448,7 +449,7 @@ public class JFFuncionario extends JFrame {
 		}
 		
 	}
-	public void limparTabela() {
+	public void limparCampos() {
 		txtId.setText(" ");
 		txtNome.setText(" ");
 		txtCpf.setText(" ");
