@@ -182,6 +182,18 @@ public class Fachada {
 	public void limpararray(){
 		controladorMensalidade.limpararray();
 	}
+	public ArrayList<Mensalidade> listarBd() throws SQLException{
+		return controladorMensalidade.listarBd();
+	}
+	public void deletarMensalidade(int codigo) throws SQLException{
+		controladorMensalidade.deletarMensalidade(codigo);
+	}
+	public void pagamento(int codigo)throws SQLException, IOException{
+		controladorMensalidade.pagamento(codigo);
+	}
+	public ArrayList<Mensalidade> pesquisarAluno(String nome) throws SQLException{
+		return controladorMensalidade.pesquisarAluno(nome);
+	}
 	
 	
 }	

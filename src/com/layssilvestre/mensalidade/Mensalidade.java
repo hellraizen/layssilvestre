@@ -17,6 +17,23 @@ public class Mensalidade {
 		this.parcela = parcela;
 		this.status = status;
 	}
+	public Mensalidade(int codigo,String tipo, int parcela, String status, String nomeAluno,double valor) {
+		this.codigo=codigo;
+		this.valor=valor;
+		this.nomeAluno = nomeAluno;
+		this.tipo = tipo;
+		this.parcela = parcela;
+		this.status = status;
+	}
+	public Mensalidade(int codigo,String tipo, int parcela, String status, String nomeAluno,double valor,String data) {
+		this.codigo=codigo;
+		this.valor=valor;
+		this.nomeAluno = nomeAluno;
+		this.tipo = tipo;
+		this.parcela = parcela;
+		this.status = status;
+		this.data= data;
+	}
 
 	@Override
 	public String toString() {

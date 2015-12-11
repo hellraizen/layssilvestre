@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.layssilvestre.clienteException.ClienteJaCadastradoException;
 import com.layssilvestre.clienteException.ClienteNaoEncontradoException;
+import com.layssilvestre.mensalidade.Mensalidade;
 
 public interface IRepositorioCliente {
 

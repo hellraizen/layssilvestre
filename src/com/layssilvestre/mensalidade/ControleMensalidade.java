@@ -1,5 +1,6 @@
 package com.layssilvestre.mensalidade;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -7,7 +8,7 @@ public class ControleMensalidade {
 
 	IRepositorioMensalidade repositorioMensalidade;
 	
-	public ControleMensalidade() throws ClassNotFoundException {
+	public ControleMensalidade() throws ClassNotFoundException, IOException {
 		repositorioMensalidade = new RepositorioMensalidade();
 		
 	}
@@ -26,5 +27,17 @@ public class ControleMensalidade {
 	}
 	public void limpararray(){
 		repositorioMensalidade.limpararray();
+	}
+	public ArrayList<Mensalidade> listarBd() throws SQLException{
+		return repositorioMensalidade.listarBd();
+	}
+	public void deletarMensalidade(int codigo) throws SQLException{
+		repositorioMensalidade.deletarMensalidade(codigo);
+	}
+	public void pagamento(int codigo)throws SQLException, IOException{
+		repositorioMensalidade.pagamento(codigo);
+	}
+	public ArrayList<Mensalidade> pesquisarAluno(String nome) throws SQLException{
+		return repositorioMensalidade.pesquisarAluno(nome);
 	}
 }
