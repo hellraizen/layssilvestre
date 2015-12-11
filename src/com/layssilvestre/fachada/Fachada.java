@@ -76,6 +76,9 @@ public class Fachada {
 
 		return controladorCliente.listar();
 	}
+	public Cliente procurarNomeCliente(String nome1) throws SQLException {
+		return controladorCliente.procurarNomeCliente(nome1);
+	}
 
 	
 

@@ -110,7 +110,7 @@ public class RepositorioClienteJdbc implements IRepositorioCliente {
 	@Override
 	public Cliente procurar(String cpf) throws SQLException {
 
-		String sql = "select * from cliente where cpf= ?";
+		String sql = "select * from cliente where cpf=?";
 
 		PreparedStatement preStatement = conn.prepareStatement(sql);
 
@@ -211,6 +211,45 @@ public class RepositorioClienteJdbc implements IRepositorioCliente {
 		}
 
 		return arrayListCliente;
+	}
+	public Cliente procurarNomeCliente(String nome1) throws SQLException {
+
+		String sql = "select * from cliente where nome like ?";
+
+		PreparedStatement preStatement = conn.prepareStatement(sql);
+
+		preStatement.setString(1, nome1+"%");
+		ResultSet resultSet = preStatement.executeQuery();
+		while (resultSet.next()) {
+		int codigo = resultSet.getInt(1);
+		String nome = resultSet.getString(2);
+		String cpf = resultSet.getString(3);
+		String dataN = resultSet.getString(4);
+		String sexo = resultSet.getString(5);
+		String email = resultSet.getString(6);
+		String telefone = resultSet.getString(7);
+		double altura = resultSet.getDouble(8);
+		double peso = resultSet.getDouble(9);
+		String status =resultSet.getString(10);
+
+		// Entrada de Endereço
+		String rua = resultSet.getString(11);
+		String bairro = resultSet.getString(12);
+		String cep =resultSet.getString(13);
+		String numero =resultSet.getString(14);
+		String cidade =resultSet.getString(15);
+		String complemento = resultSet.getString(16);
+
+		Cliente cliente = new Cliente(nome, cpf, dataN, sexo, email, telefone, peso, altura, status, rua, bairro,
+				numero,cidade, cep, complemento);
+		cliente.setCodigo(codigo);
+		
+		return cliente;
+		
+		}
+		
+		return null;
+		
 	}
 
 }

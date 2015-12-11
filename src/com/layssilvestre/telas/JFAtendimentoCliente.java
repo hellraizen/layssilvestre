@@ -45,6 +45,7 @@ public class JFAtendimentoCliente extends JFrame {
 	private JComboBox<String> cBatividadeList;
 	private DefaultTableModel defaultTable;
 	private JComboBox cBparcela;
+	private JButton btnSalvar;
 
 	/**
 	 * Launch the application.
@@ -224,6 +225,7 @@ public class JFAtendimentoCliente extends JFrame {
 				try {
 					cadastrar();
 					listar();
+					btnSalvar.setEnabled(true);
 					
 				} catch (ClassNotFoundException | IOException | SQLException e) {
 					// TODO Auto-generated catch block
@@ -232,7 +234,8 @@ public class JFAtendimentoCliente extends JFrame {
 			}
 		});
 		
-		JButton btnSalvar = new JButton("");
+		btnSalvar = new JButton("");
+		btnSalvar.setEnabled(false);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {

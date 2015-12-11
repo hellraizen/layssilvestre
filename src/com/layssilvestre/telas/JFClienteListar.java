@@ -29,6 +29,8 @@ import javax.swing.table.DefaultTableModel;
 import com.layssilvestre.clienteException.ClienteNaoEncontradoException;
 import com.layssilvestre.clientes.Cliente;
 import com.layssilvestre.fachada.Fachada;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class JFClienteListar extends JFrame {
 
@@ -81,6 +83,7 @@ public class JFClienteListar extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Fachada.getInstance().removerCliente(cpfControle);
+					listar();
 				} catch (ClassNotFoundException | SQLException | ClienteNaoEncontradoException | IOException  e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -103,6 +106,23 @@ public class JFClienteListar extends JFrame {
 		JPanel panel = new JPanel();
 		
 		txtProcurar = new JTextField();
+		txtProcurar.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		txtProcurar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String nome =txtProcurar.getText();
+				Cliente cliente;
+				try {
+					cliente = Fachada.getInstance().procurarNomeCliente(nome);
+					listar(cliente);
+				} catch (ClassNotFoundException | SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			}
+		});
 		txtProcurar.setColumns(10);
 		
 		JLabel lblPesquisar = new JLabel("Pesquisar");
@@ -115,52 +135,30 @@ public class JFClienteListar extends JFrame {
 				telaCliente.setVisible(true);
 			}
 		});
-		
-		JButton btnProcurar = new JButton("Procurar");
-		btnProcurar.setIcon(new ImageIcon(JFClienteListar.class.getResource("/com/layssilvestre/imagens/image006.gif")));
-		btnProcurar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String procura =txtProcurar.getText();
-				
-				try {
-					Cliente cliente = Fachada.getInstance().procurarCliente(procura);
-					listar(cliente);
-					
-					txtProcurar.setText("");
-					
-					
-				} catch (ClassNotFoundException | SQLException | ClienteNaoEncontradoException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(38)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 627, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(18, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(50)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblPesquisar)
 						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(38)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 627, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(50)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblPesquisar)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(btnCadastrar, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addComponent(btnRemover))
-								.addComponent(txtProcurar, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnProcurar)
-							.addGap(128)
-							.addComponent(Listar)
-							.addGap(5)
-							.addComponent(btnEditar)))
-					.addGap(74))
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addComponent(btnCadastrar, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+											.addGap(18)
+											.addComponent(btnRemover))
+										.addComponent(txtProcurar, GroupLayout.PREFERRED_SIZE, 378, GroupLayout.PREFERRED_SIZE))
+									.addGap(54)
+									.addComponent(Listar)
+									.addGap(5)
+									.addComponent(btnEditar)))))
+					.addContainerGap(18, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -175,15 +173,13 @@ public class JFClienteListar extends JFrame {
 								.addComponent(btnEditar))
 							.addGap(26))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(txtProcurar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnProcurar))
+							.addComponent(txtProcurar, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(btnRemover, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnCadastrar, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 
