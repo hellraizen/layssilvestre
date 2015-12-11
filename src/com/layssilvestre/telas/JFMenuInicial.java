@@ -6,6 +6,9 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -108,6 +111,18 @@ public class JFMenuInicial extends JFrame {
 		mnHelp.add(menuCaixa);
 
 		JMenuItem menuPagamento = new JMenuItem("Pagamento");
+		menuPagamento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFPagamento pagamentTela = null;
+				try {
+					pagamentTela = new JFPagamento();
+				} catch (ClassNotFoundException | SQLException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				};
+				pagamentTela.setVisible(true);
+			}
+		});
 		mnHelp.add(menuPagamento);
 		
 		JMenu menu_1 = new JMenu("Atendimento");
