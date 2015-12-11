@@ -82,10 +82,9 @@ public class JFCaixa extends JFrame {
 
 		JPanel panel_1 = new JPanel();
 
-		JLabel lblFuncionario = new JLabel("Funcionario :");
-
 		txtFuncionario = new JTextField();
-		txtFuncionario.setBackground(new Color(0, 0, 102));
+		txtFuncionario.setEditable(false);
+		txtFuncionario.setBackground(Color.WHITE);
 		txtFuncionario.setEnabled(false);
 		txtFuncionario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtFuncionario.setText("02");
@@ -135,33 +134,34 @@ public class JFCaixa extends JFrame {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(10)
-							.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE)
-							.addContainerGap())
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(35)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblTotalEmCaixa)
-								.addComponent(txtEntrada, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
-							.addGap(29)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblTotalSaida, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-									.addGap(32))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(txtSaida, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)))
-							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(18)
-									.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
-								.addComponent(txtTotalCaixa, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
-							.addComponent(lblFuncionario)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addGap(35)
+									.addComponent(lblTotalEmCaixa))
+								.addComponent(txtEntrada, GroupLayout.PREFERRED_SIZE, 238, GroupLayout.PREFERRED_SIZE))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(29)
+									.addComponent(txtSaida, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(98)
+									.addComponent(lblTotalSaida, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(36)
+									.addComponent(txtTotalCaixa, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 147, Short.MAX_VALUE))
+								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+									.addGap(75)))
+							.addGap(72)
 							.addComponent(txtFuncionario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(43))))
+							.addGap(43))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(10)
+							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 905, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -172,36 +172,43 @@ public class JFCaixa extends JFrame {
 							.addGap(8)
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblFuncionario)
 										.addComponent(txtFuncionario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblTotalSaida, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblTotalEmCaixa))
+										.addComponent(lblTotalEmCaixa)
+										.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 										.addComponent(txtEntrada, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 										.addComponent(txtSaida, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)))
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblTotalSaida, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
 									.addGap(8)
 									.addComponent(txtTotalCaixa, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)))))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
+		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {txtEntrada, txtSaida, txtTotalCaixa});
 
 		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1
-				.setHorizontalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup().addContainerGap()
-								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
-								.addContainerGap()));
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 886, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(68, Short.MAX_VALUE))
+		);
 		gl_panel_1.setVerticalGroup(
-				gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_1.createSequentialGroup().addGap(13)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE).addContainerGap()));
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(13)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 
 		tableCaixa = new JTable();
 		String coluna[] = new String[] { "nº", "Entrada", "Saida", "Funcionario","Mes", "Data","Descrição" };
